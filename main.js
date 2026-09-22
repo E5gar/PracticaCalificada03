@@ -1,7 +1,52 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const tarjetas = document.querySelectorAll('.tarjeta-modulo');
+  const vistaCaratula = document.getElementById('vistaCaratula');
+  const visorContenido = document.getElementById('visorContenido');
 
+  const btnLogoInicio = document.getElementById('btnLogoInicio');
+  const btnNavInicio = document.getElementById('btnNavInicio');
+  const btnNavRuleta = document.getElementById('btnNavRuleta');
+  const btnNavSorteo = document.getElementById('btnNavSorteo');
+
+  const tarjetaRuleta = document.getElementById('tarjetaRuleta');
+  const tarjetaSorteo = document.getElementById('tarjetaSorteo');
+
+  const tarjetas = [tarjetaRuleta, tarjetaSorteo];
   let indiceSeleccionado = -1;
+
+  function activarBotonNav(botonActivo) {
+    [btnNavInicio, btnNavRuleta, btnNavSorteo].forEach((btn) =>
+      btn.classList.remove('enlace-activo')
+    );
+    botonActivo.classList.add('enlace-activo');
+  }
+
+  function mostrarCaratula() {
+    visorContenido.classList.add('visor-oculto');
+    visorContenido.src = '';
+    vistaCaratula.style.display = 'flex';
+    activarBotonNav(btnNavInicio);
+    actualizarSeleccion(-1);
+  }
+
+  function mostrarModulo(ruta, botonNav) {
+    vistaCaratula.style.display = 'none';
+    visorContenido.classList.remove('visor-oculto');
+    visorContenido.src = ruta;
+    activarBotonNav(botonNav);
+  }
+
+  btnLogoInicio.addEventListener('click', mostrarCaratula);
+  btnNavInicio.addEventListener('click', mostrarCaratula);
+
+  btnNavRuleta.addEventListener('click', () => mostrarModulo('ruleta/index.html', btnNavRuleta));
+  tarjetaRuleta.addEventListener('click', () => mostrarModulo('ruleta/index.html', btnNavRuleta));
+
+  btnNavSorteo.addEventListener('click', () =>
+    mostrarModulo('sorteoequipos/index.html', btnNavSorteo)
+  );
+  tarjetaSorteo.addEventListener('click', () =>
+    mostrarModulo('sorteoequipos/index.html', btnNavSorteo)
+  );
 
   function actualizarSeleccion(nuevoIndice) {
     tarjetas.forEach((tarjeta, i) => {
@@ -16,6 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.addEventListener('keydown', (e) => {
+    if (vistaCaratula.style.display === 'none') {
+      if (e.key === 'Escape') {
+        mostrarCaratula();
+      }
+      return;
+    }
+
     if (e.key === 'ArrowRight') {
       e.preventDefault();
       const siguiente = indiceSeleccionado === -1 ? 0 : (indiceSeleccionado + 1) % tarjetas.length;
@@ -28,11 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
           : (indiceSeleccionado - 1 + tarjetas.length) % tarjetas.length;
       actualizarSeleccion(anterior);
     } else if (e.key === 'Enter') {
-      if (indiceSeleccionado !== -1) {
-        const enlace = tarjetas[indiceSeleccionado].querySelector('a');
-        if (enlace) {
-          enlace.click();
-        }
+      if (indiceSeleccionado === 0) {
+        mostrarModulo('ruleta/index.html', btnNavRuleta);
+      } else if (indiceSeleccionado === 1) {
+        mostrarModulo('sorteoequipos/index.html', btnNavSorteo);
       }
     }
   });
