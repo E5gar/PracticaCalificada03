@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aula Virtual - Ruleta</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <main class="contenedor">
+    <section class="zona-ruleta">
+      <h1 id="tituloRuleta">Ruleta del aula</h1>
+      <div id="respuesta" class="respuesta">RESPUESTA</div>
+      <div class="marco-ruleta">
+        <canvas id="lienzoRuleta" width="500" height="500"></canvas>
+        <div id="avisoGirar" class="aviso-girar">haz clic para girarlo</div>
+      </div>
+    </section>
+
+    <section class="zona-panel">
+      <div class="botones-superiores">
+        <button id="botonIniciar" class="boton-iniciar">Iniciar</button>
+        <button id="botonReiniciar" class="boton-reiniciar">Reiniciar</button>
+      </div>
+
+      <!-- Vista (modo lectura, permite resaltar en gris) -->
+      <div id="vistaElementos" class="caja-elementos" title="Haz clic para editar"></div>
+      <!-- Textarea (modo edición) -->
+      <textarea id="areaElementos" class="caja-elementos" hidden
+        placeholder="Un elemento por línea"></textarea>
+
+      <div class="botones-inferiores">
+        <button id="botonTitulo">Título</button>
+        <button id="botonEditar">Editar</button>
+        <button id="botonEsconder">Esconder</button>
+      </div>
+
+      <ul class="atajos">
+        <li><kbd>SPACE</kbd> Girarlo</li>
+        <li><kbd>S</kbd> Ocultar el elemento seleccionado</li>
+        <li><kbd>R</kbd> Reiniciar</li>
+        <li><kbd>E</kbd> Editar</li>
+        <li><kbd>F</kbd> Pantalla completa</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="js/ruleta.js"></script>
+  <script src="js/editor.js"></script>
+</body>
+</html>
