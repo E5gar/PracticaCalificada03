@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorteo de Equipos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ===== PANTALLA 1: CONFIGURACIÓN ===== -->
+  <main id="pantallaConfiguracion">
+    <h1>Sorteo de Equipos</h1>
+
+    <section class="bloque-participantes">
+      <h2>1. Ingresa los participantes</h2>
+      <textarea id="textareaParticipantes"
+                placeholder="Cada participante debe estar en una nueva línea"></textarea>
+      <p id="contadorParticipantes">0 / 100 participantes</p>
+    </section>
+
+    <section class="bloque-division">
+      <h2>2. Cómo dividir</h2>
+
+      <label>
+        <input type="radio" name="modoDivision" id="radioCantidadEquipos" value="cantidadEquipos" checked>
+        Cantidad de equipos
+      </label>
+      <label>
+        <input type="radio" name="modoDivision" id="radioParticipantesPorEquipo" value="participantesPorEquipo">
+        Participantes por equipo
+      </label>
+
+      <select id="selectValorDivision"></select>
+
+      <h2>3. Título</h2>
+      <input type="text" id="inputTituloEquipos" placeholder="Título para los equipos">
+    </section>
+
+    <div class="bloque-acciones">
+      <button id="botonLimpiar" type="button">Limpiar</button>
+      <button id="botonGenerar" type="button">Generar equipos</button>
+    </div>
+  </main>
+
+  <!-- ===== PANTALLA 2: RESULTADOS ===== -->
+  <main id="pantallaResultados" hidden>
+    <h1 id="tituloResultados"></h1>
+
+    <div id="contenedorEquipos"></div>
+
+    <div class="bloque-acciones">
+      <button id="botonDescargarJPG" type="button">Descargar JPG</button>
+      <button id="botonCopiarTexto" type="button">Copiar al portapapeles</button>
+      <button id="botonCopiarColumnas" type="button">Copiar equipos en columnas</button>
+      <button id="botonVolver" type="button">Nuevo sorteo</button>
+    </div>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
