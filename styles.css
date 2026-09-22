@@ -134,3 +134,46 @@ body {
     align-items: center;
     gap: 10px;
 }
+
+.panel-modulos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+.tarjeta-modulo {
+    background-color: var(--fondo-tarjeta);
+    border: 1px solid var(--borde-suave);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: var(--sombra-suave);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tarjeta-modulo:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(149, 157, 165, 0.18);
+}
+
+.icono-modulo {
+    font-size: 38px;
+    margin-bottom: 12px;
+}
+
+.tarjeta-modulo h2 {
+    font-size: 19px;
+    color: var(--texto-titulo);
+    margin-bottom: 10px;
+}
+
+.tarjeta-modulo p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--texto-cuerpo);
+    margin-bottom: 24px;
+    flex: 1;
+}
