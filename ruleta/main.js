@@ -188,3 +188,158 @@ dibujarRuleta(
     })
   )
 );
+
+/* Devuelve el índice del sector seleccionado */
+function obtenerIndiceSeleccionado() {
+
+  const vueltaCompleta = 2 * Math.PI;
+
+  const anguloSector =
+    vueltaCompleta /
+    elementosRuleta.length;
+
+  const anguloBajoTriangulo =
+    (
+      vueltaCompleta -
+      (
+        anguloActual %
+        vueltaCompleta
+      )
+    ) %
+    vueltaCompleta;
+
+  return Math.floor(
+    anguloBajoTriangulo /
+    anguloSector
+  ) % elementosRuleta.length;
+}
+
+/* F3: gira la ruleta */
+function girarRuleta() {
+
+  if (
+    estaGirando ||
+    elementosRuleta.length === 0
+  ) {
+    return;
+  }
+
+  estaGirando = true;
+
+  avisoGirar.hidden = true;
+
+  cajaRespuesta.textContent =
+    'Girando...';
+
+  const anguloInicial =
+    anguloActual;
+
+  const vueltasAleatorias =
+    5 + Math.random() * 5;
+
+  const anguloFinal =
+    anguloInicial +
+    vueltasAleatorias *
+    2 *
+    Math.PI;
+
+  const duracionGiro = 4000;
+
+  const tiempoInicio =
+    performance.now();
+
+  function animarGiro(tiempoActual) {
+
+    const progreso =
+      Math.min(
+        (tiempoActual - tiempoInicio) /
+        duracionGiro,
+        1
+      );
+
+    const progresoSuavizado =
+      1 -
+      Math.pow(
+        1 - progreso,
+        3
+      );
+
+    anguloActual =
+      anguloInicial +
+      (
+        anguloFinal -
+        anguloInicial
+      ) *
+      progresoSuavizado;
+
+    dibujarRuleta();
+
+    if (progreso < 1) {
+
+      requestAnimationFrame(
+        animarGiro
+      );
+
+    } else {
+
+      anguloActual =
+        anguloActual %
+        (2 * Math.PI);
+
+      estaGirando = false;
+
+      mostrarElementoSeleccionado();
+    }
+  }
+
+  requestAnimationFrame(
+    animarGiro
+  );
+}
+
+/* Muestra el resultado */
+function mostrarElementoSeleccionado() {
+
+  ultimoSorteado =
+    elementosRuleta[
+      obtenerIndiceSeleccionado()
+    ];
+
+  cajaRespuesta.textContent =
+    ultimoSorteado.texto;
+}
+
+/* Click sobre la ruleta */
+lienzoRuleta.addEventListener(
+  'click',
+  girarRuleta
+);
+
+/* Botón iniciar */
+botonIniciar.addEventListener(
+  'click',
+  girarRuleta
+);
+
+/* Tecla SPACE */
+document.addEventListener(
+  'keydown',
+  (evento) => {
+
+    if (
+      evento.target.tagName ===
+      'TEXTAREA'
+    ) {
+      return;
+    }
+
+    if (
+      evento.code === 'Space'
+    ) {
+
+      evento.preventDefault();
+
+      girarRuleta();
+    }
+  }
+);
