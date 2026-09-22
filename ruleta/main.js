@@ -1,0 +1,190 @@
+const lienzoRuleta = document.getElementById('lienzoRuleta');
+const contextoRuleta = lienzoRuleta.getContext('2d');
+const cajaRespuesta = document.getElementById('respuesta');
+const botonIniciar = document.getElementById('botonIniciar');
+const avisoGirar = document.getElementById('avisoGirar');
+
+// 5 colores básicos; si hay más de 5 elementos se repiten
+const COLORES_BASICOS = [
+  '#fa8072',
+  '#90ee90',
+  '#f5deb3',
+  '#dda0dd',
+  '#4169e1'
+];
+
+let elementosRuleta = [];
+let anguloActual = 0;
+let estaGirando = false;
+let ultimoSorteado = null;
+
+/* Dibuja la ruleta */
+function dibujarRuleta(listaElementos) {
+
+  if (listaElementos) {
+    elementosRuleta = listaElementos;
+  }
+
+  const tamanio = lienzoRuleta.width;
+  const centro = tamanio / 2;
+  const radio = centro - 30;
+  const totalElementos = elementosRuleta.length;
+
+  contextoRuleta.clearRect(0, 0, tamanio, tamanio);
+
+  if (totalElementos === 0) {
+
+    contextoRuleta.beginPath();
+    contextoRuleta.arc(
+      centro,
+      centro,
+      radio,
+      0,
+      2 * Math.PI
+    );
+
+    contextoRuleta.fillStyle = '#e0e0e0';
+    contextoRuleta.fill();
+
+    contextoRuleta.fillStyle = '#555';
+    contextoRuleta.font = '22px Arial';
+    contextoRuleta.textAlign = 'center';
+
+    contextoRuleta.fillText(
+      'Sin elementos',
+      centro,
+      centro + 60
+    );
+
+    dibujarTrianguloRojo(tamanio, centro);
+    return;
+  }
+
+  const anguloSector =
+    (2 * Math.PI) / totalElementos;
+
+  const tamanioLetra =
+    Math.max(
+      12,
+      Math.min(34, 320 / totalElementos)
+    );
+
+  elementosRuleta.forEach((elemento, indice) => {
+
+    const anguloInicio =
+      anguloActual +
+      indice * anguloSector;
+
+    const anguloFin =
+      anguloInicio +
+      anguloSector;
+
+    contextoRuleta.beginPath();
+
+    contextoRuleta.moveTo(
+      centro,
+      centro
+    );
+
+    contextoRuleta.arc(
+      centro,
+      centro,
+      radio,
+      anguloInicio,
+      anguloFin
+    );
+
+    contextoRuleta.closePath();
+
+    contextoRuleta.fillStyle =
+      COLORES_BASICOS[
+        indice % COLORES_BASICOS.length
+      ];
+
+    contextoRuleta.fill();
+
+    contextoRuleta.strokeStyle = '#ffffff';
+    contextoRuleta.lineWidth = 2;
+    contextoRuleta.stroke();
+
+    // Texto del sector
+    contextoRuleta.save();
+
+    contextoRuleta.translate(
+      centro,
+      centro
+    );
+
+    contextoRuleta.rotate(
+      anguloInicio +
+      anguloSector / 2
+    );
+
+    contextoRuleta.textAlign = 'right';
+    contextoRuleta.textBaseline = 'middle';
+
+    contextoRuleta.fillStyle = '#1a1a1a';
+
+    contextoRuleta.font =
+      `${tamanioLetra}px Arial`;
+
+    const textoCorto =
+      elemento.texto.length > 16
+        ? elemento.texto.slice(0, 15) + '…'
+        : elemento.texto;
+
+    contextoRuleta.fillText(
+      textoCorto,
+      radio - 15,
+      0
+    );
+
+    contextoRuleta.restore();
+  });
+
+  dibujarTrianguloRojo(
+    tamanio,
+    centro
+  );
+}
+
+/* Triángulo rojo */
+function dibujarTrianguloRojo(
+  tamanio,
+  centro
+) {
+
+  contextoRuleta.beginPath();
+
+  contextoRuleta.moveTo(
+    tamanio - 38,
+    centro
+  );
+
+  contextoRuleta.lineTo(
+    tamanio - 4,
+    centro - 16
+  );
+
+  contextoRuleta.lineTo(
+    tamanio - 4,
+    centro + 16
+  );
+
+  contextoRuleta.closePath();
+
+  contextoRuleta.fillStyle = '#e00000';
+
+  contextoRuleta.fill();
+}
+
+/* Datos de prueba */
+dibujarRuleta(
+  Array.from(
+    { length: 12 },
+    (_, i) => ({
+      texto: String(i + 1),
+      indiceLinea: i
+    })
+  )
+);
