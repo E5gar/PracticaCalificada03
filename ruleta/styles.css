@@ -1,0 +1,95 @@
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #fdf8f6;
+  color: #222;
+}
+
+.contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* ---------- Ruleta ---------- */
+.zona-ruleta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.zona-ruleta h1 { margin: 0; font-size: 1.4rem; }
+
+.respuesta {
+  min-width: 320px;
+  padding: 10px 20px;
+  border: 2px solid #222;
+  background: #fff;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.marco-ruleta { position: relative; width: min(500px, 90vw); }
+#lienzoRuleta { width: 100%; height: auto; cursor: pointer; display: block; }
+
+.aviso-girar {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(40, 40, 60, 0.75);
+  color: #fff;
+  padding: 8px 28px;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  pointer-events: none; /* deja pasar el clic al canvas */
+}
+
+/* ---------- Panel ---------- */
+.zona-panel { width: 280px; display: flex; flex-direction: column; gap: 12px; }
+
+.botones-superiores { display: flex; gap: 8px; }
+.boton-iniciar {
+  background: #0d6efd; color: #fff; border: none;
+  padding: 8px 18px; font-size: 1rem; cursor: pointer;
+}
+.boton-reiniciar {
+  background: #e57373; color: #fff; border: none;
+  padding: 6px 10px; cursor: pointer;
+}
+
+.caja-elementos {
+  width: 100%;
+  height: 260px;
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 6px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  overflow-y: auto;
+  resize: vertical;
+}
+#vistaElementos { cursor: text; color: #1a3a8a; }
+.fila-elemento { white-space: pre-wrap; }
+.fila-elemento.oculto { background: #bdbdbd; color: #555; text-decoration: line-through; }
+
+.botones-inferiores { display: flex; justify-content: space-between; }
+.botones-inferiores button {
+  background: #fff; border: 1px solid #bbb; color: #555;
+  padding: 3px 10px; cursor: pointer; font-size: 0.85rem;
+}
+
+.atajos { list-style: none; padding: 0; margin: 0; font-size: 0.85rem; }
+.atajos li { margin: 6px 0; }
+kbd {
+  border: 1px solid #aaa; border-radius: 3px;
+  padding: 1px 5px; background: #fff; font-size: 0.75rem;
+}
+
+button:focus-visible, .caja-elementos:focus-visible { outline: 2px solid #0d6efd; }
