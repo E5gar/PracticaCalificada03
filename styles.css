@@ -177,3 +177,34 @@ body {
     margin-bottom: 24px;
     flex: 1;
 }
+
+
+.boton-acceso {
+    display: inline-block;
+    width: 100%;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--texto-titulo);
+    transition: background-color 0.2s ease;
+}
+
+.boton-ruleta {
+    background-color: var(--pastel-azul);
+    border: 1px solid #b3d1fa;
+}
+
+.boton-ruleta:hover {
+    background-color: var(--pastel-azul-hover);
+}
+
+.boton-sorteo {
+    background-color: var(--pastel-rosa);
+    border: 1px solid #f8b8cc;
+}
+
+.boton-sorteo:hover {
+    background-color: var(--pastel-rosa-hover);
+}
