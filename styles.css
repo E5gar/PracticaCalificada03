@@ -208,3 +208,12 @@ body {
 .boton-sorteo:hover {
     background-color: var(--pastel-rosa-hover);
 }
+
+.pie-pagina {
+    background-color: #2d3748;
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
+    color: #a0aec0;
+    margin-top: auto;
+}
